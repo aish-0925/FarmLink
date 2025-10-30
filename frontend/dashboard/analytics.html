@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="farmLinkApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics – FarmLink</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { background-color: #f8f9fa; }
+    .section-title { margin-bottom: 1.5rem; color: #6610f2; font-weight: bold; }
+    .card { margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body ng-controller="analyticsController">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand text-success fw-bold" href="../index.html">
+        <i class="fa-solid fa-leaf me-2"></i>FarmLink
+      </a>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2 class="section-title">Analytics Dashboard</h2>
+    <p class="text-muted">Visual insights about requests, offers, and contracts.</p>
+
+    <div class="row">
+
+      <!-- Total Requests -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center p-3">
+          <h5>Total Requests</h5>
+          <p class="display-5 fw-bold">{{stats.totalRequests}}</p>
+        </div>
+      </div>
+
+      <!-- Total Offers -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center p-3">
+          <h5>Total Offers</h5>
+          <p class="display-5 fw-bold">{{stats.totalOffers}}</p>
+        </div>
+      </div>
+
+      <!-- Completed Contracts -->
+      <div class="col-md-4">
+        <div class="card shadow-sm text-center p-3">
+          <h5>Completed Contracts</h5>
+          <p class="display-5 fw-bold">{{stats.completedContracts}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3">
+          <h5 class="card-title">Requests by Item</h5>
+          <canvas id="requestsChart"></canvas>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3">
+          <h5 class="card-title">Contracts Status</h5>
+          <canvas id="contractsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap & AngularJS -->
+  <script src="../js/lib/angular.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/controllers/analyticsController.js"></script>
+  <script>
+    // Initialize Chart.js inside Angular controller
+    angular.module('farmLinkApp').controller('analyticsController', function($scope, analyticsService) {
+      $scope.stats = { totalRequests: 0, totalOffers: 0, completedContracts: 0 };
+
+      // Fetch stats from backend
+      analyticsService.getStats().then(function(res){
+        $scope.stats = res.data;
+
+        // Requests by Item Chart
+        const requestsCtx = document.getElementById('requestsChart').getContext('2d');
+        new Chart(requestsCtx, {
+          type: 'bar',
+          data: {
+            labels: res.data.items.map(i => i.name),
+            datasets: [{
+              label: 'Requests',
+              data: res.data.items.map(i => i.count),
+              backgroundColor: '#6610f2'
+            }]
+          },
+          options: { responsive: true }
+        });
+
+        // Contracts Status Chart
+        const contractsCtx = document.getElementById('contractsChart').getContext('2d');
+        new Chart(contractsCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Pending', 'Completed'],
+            datasets: [{
+              label: 'Contracts',
+              data: [res.data.pendingContracts, res.data.completedContracts],
+              backgroundColor: ['#ffc107','#28a745']
+            }]
+          },
+          options: { responsive: true }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
