@@ -1,0 +1,195 @@
+/* FarmLink landing page styles - keep this file as assets/css/style.css */
+
+/* Palette */
+:root{
+  --accent:#2f8f4a;
+  --accent-soft:#eaf7ee;
+  --muted:#6b7a6b;
+  --bg:#f5fbf6;
+  --dark:#0b2a12;
+  --glass: rgba(255,255,255,0.85);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#123;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* NAV */
+.site-nav{
+  background:var(--glass);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(11,42,18,0.04);
+  padding:0.6rem 0;
+}
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--accent), #1f6a36);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 8px 30px rgba(31, 106, 54, 0.12);
+}
+
+.brand-logo i {
+  color: #fff;
+}
+
+.brand-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+}
+.brand-text span.text-success {
+  color: var(--accent);
+}
+
+.brand-text .h6{font-weight:800;color:var(--dark);letter-spacing:.2px}
+.site-nav .nav-link{color:rgba(11,42,18,.7);font-weight:600;margin-left:.6rem}
+.site-nav .btn-outline-success{border-radius:999px}
+.site-nav .btn-success{border-radius:999px}
+
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  min-height:78vh;
+  position:relative;
+  overflow:hidden;
+}
+.hero-left, .hero-right{
+  position:relative;min-height:420px;
+  background-size:cover;background-position:center;
+}
+.hero-left {
+  background-image: url('https://plus.unsplash.com/premium_photo-1678655491251-bbc237156a5c?auto=format&fit=crop&q=80&w=1200');
+  background-size: cover;
+  background-position: center;
+}
+.hero-right {
+  background-image: url('https://images.unsplash.com/photo-1721637713270-5470ea1d6389?auto=format&fit=crop&q=80&w=1200');
+  background-size: cover;
+  background-position: center;
+}
+/* Removed white overlay */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: none;
+  pointer-events: none;
+}
+
+/* HERO CONTENT CENTERING */
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff !important;
+  z-index: 3;
+  width: 90%;
+  max-width: 900px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* Force all hero text to stay white */
+.hero-content * {
+  color: #fff !important;
+}
+
+
+/* TITLE AND TEXT */
+.hero-title {
+  color: #fff;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+.hero-content p,
+.hero-content .lead {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.15rem;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1.5rem;
+}
+
+/* HERO BUTTONS */
+.hero-content .btn {
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 0.6rem 1.3rem;
+  font-size: 1rem;
+}
+
+.hero-content .btn-ghost {
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
+.hero-content .btn-ghost:hover {
+  background: #fff;
+  color: var(--accent);
+}
+
+.accent{color:var(--accent);background:rgba(255,255,255,0.04);padding:.06rem .12rem;border-radius:6px}
+.lead.text-muted{color:rgba(255,255,255,0.9);font-weight:500}
+
+/* Buttons */
+.btn-pill{border-radius:999px;padding:.6rem 1.2rem;font-weight:700}
+.btn-ghost{background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.06)}
+
+/* MINI PREVIEW */
+.mini-preview{background:var(--glass);border-radius:12px;padding:12px;max-width:340px;box-shadow:0 12px 30px rgba(5,20,10,0.06)}
+.mini-item{display:flex;gap:10px;align-items:center;margin-top:8px}
+.mini-item img{width:64px;height:44px;object-fit:cover;border-radius:8px}
+.price{color:var(--accent);font-weight:800}
+
+/* PREVIEW STRIP */
+.preview-strip{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:-2rem auto 1.25rem;max-width:1150px;padding:0 1rem}
+.preview-card{border-radius:14px;padding:18px;background:linear-gradient(180deg,#fff,#fbfff7);box-shadow:0 10px 30px rgba(8,34,18,0.05);display:flex;flex-direction:column;min-height:170px}
+
+/* HOW */
+.how{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.step{padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#f6fff7);text-align:center;box-shadow:0 8px 22px rgba(9,40,18,0.04)}
+
+/* WHY */
+.why-section .stat-card{border-radius:12px;box-shadow:0 10px 30px rgba(5,20,10,0.04);background:linear-gradient(180deg,#fff,#f8fff7)}
+
+/* CTA */
+.big-cta{max-width:1100px;margin:2rem auto;padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(47,143,74,0.06), rgba(47,143,74,0.03));display:flex;justify-content:space-between;align-items:center;gap:1rem;box-shadow:0 12px 28px rgba(18,60,20,0.03)}
+.big-cta .btn-pill{padding:.55rem 1rem}
+
+/* FOOTER */
+.site-footer{padding:28px 0;color:var(--muted);font-size:.95rem}
+
+/* Animations / reveal */
+.fade-up{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+.fade-up.in-view{opacity:1;transform:none}
+
+/* responsive */
+@media (max-width:992px){
+  .hero{grid-template-columns:1fr;min-height:62vh}
+  .hero-content{top:6%}
+  .preview-strip{grid-template-columns:1fr}
+  .mini-preview{display:none}
+  .hero-title{font-size:clamp(28px,6vw,42px)}
+}
