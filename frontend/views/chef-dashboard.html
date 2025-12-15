@@ -1,0 +1,180 @@
+<!-- 🌿 Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#!/">
+      <div class="brand-logo">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <div class="brand-text">
+        <span class="fw-bold">FarmLink</span>
+      </div>
+    </a>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="text-white small">
+        Hi, {{user.name || 'Chef'}}
+      </div>
+      <button class="btn btn-outline-danger btn-sm" ng-click="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Banner -->
+<section class="hero-banner container mt-3">
+  <h1>Chef Dashboard</h1>
+  <p>
+    Source fresh produce directly from trusted farms.
+    Manage your requests, offers, and contracts — all in one place.
+  </p>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="container py-5" ng-controller="ChefCtrl">
+  <div class="row g-4">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-lg-8">
+
+      <!-- My Requests -->
+      <div class="section-card p-3 mb-4">
+        <div class="section-header">
+          <i class="fa-solid fa-clipboard-list"></i>
+          My Ingredient Requests
+        </div>
+
+        <div class="text-end mb-2">
+          <button class="btn btn-success btn-sm" ng-click="openRequestModal()">
+            <i class="fa-solid fa-plus me-1"></i> New Request
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Qty</th>
+                <th>Freq</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="req in requests">
+                <td>{{req.ingredient}}</td>
+                <td>{{req.quantity}}</td>
+                <td>{{req.frequency}}</td>
+                <td>{{req.location}}</td>
+              </tr>
+              <tr ng-if="requests.length === 0">
+                <td colspan="4" class="text-muted text-center">
+                  No requests yet.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Incoming Offers -->
+      <div class="section-card p-3 mb-4">
+        <div class="section-header">
+          <i class="fa-solid fa-handshake"></i>
+          Incoming Offers
+        </div>
+
+        <input class="form-control form-control-sm mb-2"
+               placeholder="Search offers..."
+               ng-model="offerSearch">
+
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Farm</th>
+              <th>Qty</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="offer in offers | filter:offerSearch">
+              <td>{{offer.farmName}}</td>
+              <td>{{offer.quantity}}</td>
+              <td>₹{{offer.price}}</td>
+            </tr>
+            <tr ng-if="offers.length === 0">
+              <td colspan="3" class="text-muted text-center">
+                No offers yet.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Active Contracts -->
+      <div class="section-card p-3 mb-4">
+        <div class="section-header">
+          <i class="fa-solid fa-file-contract"></i>
+          Active Contracts
+        </div>
+
+        <div class="list-group">
+          <div class="list-group-item"
+               ng-repeat="c in contracts">
+            {{c.crop}} – {{c.qty}} @ ₹{{c.price}}
+          </div>
+          <div class="text-muted text-center"
+               ng-if="contracts.length === 0">
+            No active contracts.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-lg-4">
+
+      <!-- Analytics -->
+      <div class="card small p-3 mb-3">
+        <h6 class="fw-bold text-success">
+          <i class="fa-solid fa-chart-simple me-1"></i>
+          Analytics Overview
+        </h6>
+
+        <div class="d-flex gap-3 mt-2">
+          <div class="text-center">
+            <div class="h5">{{requests.length}}</div>
+            <div class="small text-muted">Requests</div>
+          </div>
+          <div class="text-center">
+            <div class="h5">{{offers.length}}</div>
+            <div class="small text-muted">Offers</div>
+          </div>
+          <div class="text-center">
+            <div class="h5">{{contracts.length}}</div>
+            <div class="small text-muted">Contracts</div>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <div class="small text-muted">Est. Spend</div>
+          <div class="fw-bold">₹{{estimatedSpend}}</div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="card small p-3">
+        <h6 class="fw-bold text-success">
+          <i class="fa-solid fa-search me-1"></i>
+          Search Farms / Produce
+        </h6>
+        <input class="form-control form-control-sm"
+               placeholder="Search ingredient..."
+               ng-model="globalSearch">
+      </div>
+
+    </div>
+
+  </div>
+</main>

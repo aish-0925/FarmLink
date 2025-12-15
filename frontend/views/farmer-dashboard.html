@@ -1,0 +1,177 @@
+<!-- 🌿 Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#!/">
+      <div class="brand-logo">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <div class="brand-text">
+        <span class="fw-bold">FarmLink</span>
+      </div>
+    </a>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="text-white small">
+        Hi, {{user.name || 'Farmer'}}
+      </div>
+      <button class="btn btn-outline-danger btn-sm" ng-click="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Banner -->
+<section class="hero-banner container mt-3">
+  <h1>Farmer Dashboard</h1>
+  <p>
+    Connect directly with chefs and restaurants, manage produce listings,
+    offers, and deliveries all in one place.
+  </p>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="container py-5" ng-controller="FarmerCtrl">
+  <div class="row g-4">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-lg-8">
+
+      <!-- My Produce -->
+      <div class="section-card p-3 mb-4">
+        <div class="section-header">
+          <i class="fa-solid fa-seedling"></i> My Produce
+        </div>
+
+        <div class="text-end mb-2">
+          <button class="btn btn-success btn-sm" ng-click="openAddProduce()">
+            <i class="fa-solid fa-plus me-1"></i> Add Produce
+          </button>
+        </div>
+
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Cert.</th>
+              <th>Season</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="p in produce">
+              <td>{{p.name}}</td>
+              <td>{{p.quantity}}</td>
+              <td>{{p.certification}}</td>
+              <td>{{p.season}}</td>
+            </tr>
+            <tr ng-if="produce.length === 0">
+              <td colspan="4" class="text-muted text-center">
+                No produce added yet.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Matching Requests -->
+      <div class="section-card p-3 mb-4">
+        <div class="section-header">
+          <i class="fa-solid fa-magnifying-glass"></i> Matching Requests
+        </div>
+
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Chef</th>
+              <th>Ingredient</th>
+              <th>Qty</th>
+              <th>Offer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="r in matchingRequests">
+              <td>{{r.chef}}</td>
+              <td>{{r.ingredient}}</td>
+              <td>{{r.qty}}</td>
+              <td>₹{{r.offer}}</td>
+            </tr>
+            <tr ng-if="matchingRequests.length === 0">
+              <td colspan="4" class="text-muted text-center">
+                No matching requests.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Active Contracts -->
+      <div class="section-card p-3 mb-4">
+        <div class="section-header">
+          <i class="fa-solid fa-file-contract"></i> Active Contracts
+        </div>
+
+        <div class="list-group">
+          <div class="list-group-item"
+               ng-repeat="c in contracts">
+            {{c.crop}} – {{c.qty}} @ ₹{{c.price}}
+          </div>
+
+          <div class="text-muted text-center"
+               ng-if="contracts.length === 0">
+            No active contracts.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-lg-4">
+
+      <!-- Delivery Tracker -->
+      <div class="card small p-3 mb-3">
+        <h6 class="fw-bold text-success">
+          <i class="fa-solid fa-truck me-1"></i> Delivery Tracker
+        </h6>
+        <div class="small text-muted">
+          {{deliveries.length ? deliveries.length + ' active deliveries' : 'No active deliveries.'}}
+        </div>
+      </div>
+
+      <!-- Sales Trend -->
+      <div class="card small p-3 mb-3">
+        <h6 class="fw-bold text-success">
+          <i class="fa-solid fa-chart-column me-1"></i> Sales Trend
+        </h6>
+        <div class="small text-muted">
+          Est. sales: ₹{{salesTotal}}
+        </div>
+      </div>
+
+      <!-- Demand Forecast -->
+      <div class="card small p-3 mb-3">
+        <h6 class="fw-bold text-success">
+          <i class="fa-solid fa-signal me-1"></i> Demand Forecast
+        </h6>
+        <div class="small text-muted">
+          Next 3 months projected demand.
+        </div>
+      </div>
+
+      <!-- Delivery Schedule -->
+      <div class="card small p-3">
+        <h6 class="fw-bold text-success">
+          <i class="fa-solid fa-calendar-check me-1"></i> Delivery Schedule
+        </h6>
+
+        <button class="btn btn-success btn-sm mt-2"
+                ng-click="openSchedule()">
+          Schedule Delivery
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</main>
