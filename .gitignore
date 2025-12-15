@@ -12,3 +12,4 @@ frontend/.env
 frontend/build/
 backend/dist/
 *.log
+backend/package.json
